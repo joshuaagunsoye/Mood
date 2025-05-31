@@ -146,7 +146,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/joshuaagunsoye/Documents/mood/src/generated/prisma",
+      "value": "/Users/liveartit/Documents/GitHub/Mood/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -160,7 +160,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/joshuaagunsoye/Documents/mood/prisma/schema.prisma",
+    "sourceFilePath": "/Users/liveartit/Documents/GitHub/Mood/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -174,6 +174,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -184,7 +185,7 @@ const config = {
   },
   "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider     = \"postgresql\"\n  url          = env(\"DATABASE_URL\")\n  relationMode = \"prisma\"\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  clerkId String         @unique\n  email   String         @unique\n  entries JournalEntry[]\n}\n\nmodel JournalEntry {\n  id        String   @id @default(uuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  userId String\n  user   User   @relation(fields: [userId], references: [id])\n\n  content String @db.Text\n\n  analysis Analysis?\n\n  @@index([userId])\n}\n\nmodel Analysis {\n  id        String   @id @default(uuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  entryId String\n  entry   JournalEntry @relation(fields: [entryId], references: [id])\n\n  mood     String\n  summary  String  @db.Text\n  color    String\n  negative Boolean\n\n  @@unique([entryId])\n}\n",
   "inlineSchemaHash": "65951deb5edfd1b3d2ef801bb71188e749997ae567063f9f178d1331a868f4fd",
-  "copyEngine": false
+  "copyEngine": true
 }
 config.dirname = '/'
 
